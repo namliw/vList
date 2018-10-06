@@ -19,7 +19,7 @@ class Playlist extends React.Component {
                 <span>
                     Playlist
                 </span>
-                <ul className="col-md-4 list-group">
+                <ul className="list-group">
                     {videoItems}
                 </ul>
             </div>
