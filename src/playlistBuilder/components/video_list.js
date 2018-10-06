@@ -7,6 +7,11 @@ import _ from 'lodash';
 
 class VideoList extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.videoClick = this.videoClick.bind(this);
+    }
+
     nextPage(term, nextPageKey) {
         const {nextPageToken, searchTerm} = this.props;
         this.props.setTerm(searchTerm);
@@ -21,7 +26,7 @@ class VideoList extends React.Component {
     render() {
         const videoItems = _.map(this.props.videoResults, (video) => {
             return (<VideoListItem
-                onVideoClick={this.videoClick.bind(this)}
+                onVideoClick={this.videoClick}
                 key={video.etag} video={video}/>);
         });
         if (!videoItems || videoItems.length == 0) {
