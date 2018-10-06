@@ -4,6 +4,11 @@ import {connect} from 'react-redux';
 import {searchVideos} from '../actions/searchAction';
 
 class SearchForm extends Component {
+
+    constructor(props){
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
     /**
      * takes care of displaying the texfield into the dom
      * @returns {*}
@@ -27,7 +32,10 @@ class SearchForm extends Component {
      * @param values
      */
     onSubmit(values){
-        this.props.searchVideos(values.searchTerm);
+        const {submitting} = this.props;
+        if(!submitting){
+            return this.props.searchVideos(values.searchTerm);
+        }
     }
 
     /**
@@ -38,7 +46,7 @@ class SearchForm extends Component {
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
         return (
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+            <form onSubmit={handleSubmit(this.onSubmit)}>
                     <Field name="searchTerm" label="Search box" component={this.renderTextField}/>
                 <div>
                     <div>

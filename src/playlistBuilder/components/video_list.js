@@ -3,6 +3,7 @@ import VideoListItem from '../containers/video_list_item';
 import {connect} from 'react-redux';
 import {searchVideos, addToPlaylist, removeFromResults} from "../actions/searchAction";
 import {setTerm} from "../actions/setTermAction";
+import _ from 'lodash';
 
 class VideoList extends React.Component {
 
@@ -18,16 +19,14 @@ class VideoList extends React.Component {
     }
 
     render() {
-        const videos = this.props.videoResults;
-        if (!videos || videos.length == 0) {
-            return <div>loading ....</div>;
-        }
-        const videoItems = videos.map((video) => {
+        const videoItems = _.map(this.props.videoResults, (video) => {
             return (<VideoListItem
                 onVideoClick={this.videoClick.bind(this)}
                 key={video.etag} video={video}/>);
         });
-
+        if (!videoItems || videoItems.length == 0) {
+            return <div>loading ....</div>;
+        }
         return (<div>
                 <ul className="list-group">
                     {videoItems}
