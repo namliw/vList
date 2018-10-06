@@ -5,12 +5,12 @@ import { createStore, applyMiddleware } from 'redux';
 
 import App from './components/app';
 import reducers from './reducers';
+import ReduxPromise from 'redux-promise';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
-import SimpleForm from './playlistBuilder/containers/simple';
+const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <SimpleForm />
+    <App />
   </Provider>
   , document.querySelector('.container'));

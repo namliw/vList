@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {connect} from 'react-redux';
+import {searchVideos} from '../actions/searchAction';
 
 class SearchForm extends Component {
     /**
@@ -8,7 +10,6 @@ class SearchForm extends Component {
      * @param field
      */
     renderTextField(field) {
-        console.log(field)
         const {meta: {touched, error}} = field;
         const className = `form-group ${(touched && error ? 'has-danger' : '')}`;
 
@@ -26,7 +27,7 @@ class SearchForm extends Component {
      * @param values
      */
     onSubmit(values){
-        console.log(values);
+        this.props.searchVideos(values.searchTerm);
     }
 
     /**
@@ -54,12 +55,7 @@ class SearchForm extends Component {
     }
 }
 
-function validate(values) {
-    const errors = {};
-    console.log('validate',values);
-    return errors;
-}
 
 export default reduxForm({
-    form: 'searchForm1', validate
-})(SearchForm);
+    form: 'searchForm'
+})(connect(null,{searchVideos})(SearchForm));
