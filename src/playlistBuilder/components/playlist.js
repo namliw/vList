@@ -3,6 +3,7 @@ import VideoListItem from '../containers/video_list_item';
 import {connect} from 'react-redux';
 import ReactPlayer from 'react-player';
 import _ from 'lodash';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Playlist extends React.Component {
 
@@ -30,6 +31,12 @@ class Playlist extends React.Component {
         }
         const {currentVideo} = this.state;
 
+        const transitionSettings = {
+            transitionName: 'fade',
+            transitionEnterTimeout: 500,
+            transitionLeaveTimeout: 500
+        };
+
         return (<div className="row">
                 <div className="row">
                     {(currentVideo) ?
@@ -40,7 +47,9 @@ class Playlist extends React.Component {
                         Playlist
                     </span>
                     <ul className="list-group">
+                        <ReactCSSTransitionGroup { ...transitionSettings}>
                         {videoItems}
+                        </ReactCSSTransitionGroup>
                     </ul>
                 </div>
             </div>

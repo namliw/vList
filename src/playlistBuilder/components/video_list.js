@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {searchVideos, addToPlaylist, removeFromResults} from "../actions/searchAction";
 import {setTerm} from "../actions/setTermAction";
 import _ from 'lodash';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class VideoList extends React.Component {
 
@@ -32,9 +33,16 @@ class VideoList extends React.Component {
         if (!videoItems || videoItems.length == 0) {
             return <div>loading ....</div>;
         }
+        const transitionSettings = {
+            transitionName: 'fade',
+            transitionEnterTimeout: 500,
+            transitionLeaveTimeout: 500
+        };
         return (<div>
                 <ul className="list-group">
+                    <ReactCSSTransitionGroup { ...transitionSettings}>
                     {videoItems}
+                    </ReactCSSTransitionGroup>
                 </ul>
                 <button className="btn btn-primary" onClick={this.nextPage.bind(this)}>Load next 5</button>
             </div>

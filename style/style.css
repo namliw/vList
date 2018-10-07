@@ -1,0 +1,21 @@
+.fade-enter{
+    right:100px;
+    opacity: 0;
+}
+
+.fade-enter-active{
+    right: 0px;
+    opacity: 1;
+    transition: .5s ease-in all;
+}
+
+.fade-leave{
+    right: 0px;
+    opacity: 1;
+}
+
+.fade-leave-active{
+    right: -100px;
+    opacity: 0;
+    transition: .2s ease-in all;
+}
