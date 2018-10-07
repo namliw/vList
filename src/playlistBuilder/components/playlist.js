@@ -1,9 +1,7 @@
 import React from 'react';
-import VideoListItem from '../containers/video_list_item';
 import {connect} from 'react-redux';
 import ReactPlayer from 'react-player';
-import _ from 'lodash';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import VideoListContainer from "../containers/videoListContainer";
 
 class Playlist extends React.Component {
 
@@ -14,28 +12,11 @@ class Playlist extends React.Component {
     }
 
     setCurrentVideo(currentVideo) {
-        console.log('setting state', currentVideo);
         this.setState({currentVideo});
     }
 
     render() {
-
-        const videoItems = _.map(this.props.playlist, (video) => {
-            return (<VideoListItem
-                onVideoClick={this.setCurrentVideo}
-                key={video.etag} video={video}/>);
-        });
-
-        if (!videoItems || videoItems.length == 0) {
-            return <div>Playlist</div>;
-        }
         const {currentVideo} = this.state;
-
-        const transitionSettings = {
-            transitionName: 'fade',
-            transitionEnterTimeout: 500,
-            transitionLeaveTimeout: 500
-        };
 
         return (<div className="row">
                 <div className="row">
@@ -46,11 +27,7 @@ class Playlist extends React.Component {
                     <span>
                         Playlist
                     </span>
-                    <ul className="list-group">
-                        <ReactCSSTransitionGroup { ...transitionSettings}>
-                        {videoItems}
-                        </ReactCSSTransitionGroup>
-                    </ul>
+                    <VideoListContainer videoList={this.props.playlist} onVideoClick={this.setCurrentVideo}/>
                 </div>
             </div>
         );

@@ -1,10 +1,8 @@
 import React from 'react';
-import VideoListItem from '../containers/video_list_item';
 import {connect} from 'react-redux';
 import {searchVideos, addToPlaylist, removeFromResults} from "../actions/searchAction";
 import {setTerm} from "../actions/setTermAction";
-import _ from 'lodash';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import VideoListContainer from "../containers/videoListContainer";
 
 class VideoList extends React.Component {
 
@@ -25,26 +23,12 @@ class VideoList extends React.Component {
     }
 
     render() {
-        const videoItems = _.map(this.props.videoResults, (video) => {
-            return (<VideoListItem
-                onVideoClick={this.videoClick}
-                key={video.etag} video={video}/>);
-        });
-        if (!videoItems || videoItems.length == 0) {
-            return <div>loading ....</div>;
-        }
-        const transitionSettings = {
-            transitionName: 'fade',
-            transitionEnterTimeout: 500,
-            transitionLeaveTimeout: 500
-        };
+        const loadMore = _.isEmpty(this.props.videoResults)?'':(
+            <button className="btn btn-primary" onClick={this.nextPage.bind(this)}>Load next 5</button>);
+
         return (<div>
-                <ul className="list-group">
-                    <ReactCSSTransitionGroup { ...transitionSettings}>
-                    {videoItems}
-                    </ReactCSSTransitionGroup>
-                </ul>
-                <button className="btn btn-primary" onClick={this.nextPage.bind(this)}>Load next 5</button>
+                <VideoListContainer videoList={this.props.videoResults} onVideoClick={this.videoClick} />
+                {loadMore}
             </div>
         );
     }
